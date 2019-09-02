@@ -1,5 +1,5 @@
 ---
-title: 1, Sub architecture decisions
+title: 2, Sub architecture decisions
 layout: home
 status: accepted
 date: 2019-06-28
