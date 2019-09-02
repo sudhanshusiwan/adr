@@ -1,0 +1,15 @@
+service_name: ADR
+service_repo: sudhanshusiwan/adr
+collections:
+  adrs:
+    output: true
+  designs:
+    output: true
+exclude:
+  - vendor
+  - _adrs/templates/template.md
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"

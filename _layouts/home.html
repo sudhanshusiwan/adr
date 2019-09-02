@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="cache-control" content="no-cache">
+    <title>{{ page.title }}</title>
+    <!-- CSS GRID -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- <link rel="shortcut icon" href="{{ '/images/favicon.png' | relative_url }}" /> -->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:300" rel="stylesheet">
+    <link rel="stylesheet" href="{{ 'css/base.css' | relative_url }}" type="text/css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="content">
+        <a href="{{ '/' | relative_url }}">Home</a>
+        {{ content }}
+      </div>
+
+      {% assign prevflag = 1 %}
+      {% assign nextflag = 1 %}
+
+      {% assign collection = site.collections | where: "git
+      label", page.collection | first %}
+
+      {% for c in collection.docs %}
+        {% if c.title == page.title %}
+          {% assign currentItemIndex = forloop.index0 %}
+          {% if forloop.index == 1 %}
+            {% assign prevflag = 0 %}
+            {% assign nextflag = 1 %}
+          {% elsif forloop.index == forloop.length %}
+            {% assign prevflag = 1 %}
+            {% assign nextflag = 0 %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+
+      <div id="footer">
+        <ul id="menu">
+          {% if prevflag == 1 %}
+            {% assign prevItemIndex = currentItemIndex | minus: 1 %}
+            {% assign prevPost = collection.docs[prevItemIndex] %}
+            <li><a href="{{prevPost.url | relative_url }}">prev: {{prevPost.title}}</a></li>
+          {% endif %}
+
+          <li><a href="{{ '/' | relative_url }}">| Home |</a></li>
+
+          {% if nextflag == 1 %}
+            {% assign nextItemIndex = currentItemIndex | plus: 1 %}
+            {% assign nextPost = collection.docs[nextItemIndex] %}
+            <li><a href="{{nextPost.url  | relative_url }}">next: {{nextPost.title}}</a></li>
+          {% endif %}
+        </ul>
+      </div> <!-- footer -->
+    </div><!-- #container -->
+  </body>
+</html>
